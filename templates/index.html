@@ -30,11 +30,9 @@
                 url:'/getlist',
                 type:'GET',
                 success:function(result){
-                    len_result = result.length;
-                    for(var x =0; x < len_result; x++){
-                        $("#filelist").append('<br><a href=/download/' + result[x] + '>' + result[x] +'</a>');
-                    }
-                    alert(content_list);
+                    $.each($.parseJSON(result), function(index, val) {
+                        $("#filelist").append(val).append('</br>')
+                    })
                 },
                 error:function(){
                     alert("失败");
