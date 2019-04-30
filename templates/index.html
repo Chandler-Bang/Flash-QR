@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,38 +10,42 @@
     <script src="../static/js/toastr.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" name="file" id="file">
         <input type="submit" value="upload">
         <a href=""></a>
-    </form><hr>
+    </form>
+    <hr>
     <ol id="filelist">
     </ol>
     <script>
-        function checkstatus(){
-            if('{{status}}'== 'OK'){
+        function checkstatus() {
+            if ('{{status}}' == 'OK') {
                 toastr['success']("上传成功");
-            }else if('{{status}}'== 'null'){
-                toastr['error']("上传失败");           
+            } else if ('{{status}}' == 'null') {
+                toastr['error']("上传失败");
             }
         }
-        function get_list(){
+
+        function get_list() {
             $.ajax({
-                url:'/getlist',
-                type:'GET',
-                success:function(result){
+                url: '/getlist',
+                type: 'GET',
+                success: function(result) {
                     $.each($.parseJSON(result), function(index, val) {
                         $("#filelist").append(val).append('</br>')
                     })
                 },
-                error:function(){
+                error: function() {
                     alert("失败");
                 }
             });
         }
-    checkstatus();
-    get_list();
+        checkstatus();
+        get_list();
     </script>
 </body>
+
 </html>
