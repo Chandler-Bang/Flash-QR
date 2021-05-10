@@ -9,7 +9,7 @@ import json
 app = Flask(__name__)
 
 # ALLOWED_EXTENSTIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-download_floder = './upload/'
+download_floder = './data/'
 
 def allow_file(filename):
     allow_list = ['png', 'PNG', 'jpg', 'doc', 'docx', 'txt', 'pdf', 'PDF', 'xls', 'rar', 'exe', 'md', 'zip'] 
@@ -36,14 +36,17 @@ def download(filename):
 @app.route('/upload', methods=['POST'])
 def upload():
     f = request.files['file']
+    # download_floder = download_floder + f.filename
     result = 'null'
+    if not os.path.exists(download_floder):
+        os.makedirs(download_floder)
     # print type(file)
     if f and allow_file(f.filename):
         f.save(os.path.join(download_floder, f.filename))
         result = 'OK'
     elif f:
         result = 'NO'
-    return render_template('index.html', status=result)
+    return render_template("index.html",status=result)
 
 if __name__ == '__main__':
     if not os.path.exists(download_floder):
